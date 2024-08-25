@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import { User } from '../models/user.model';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, getDoc } from 'firebase/firestore';
 
 
 @Injectable({
@@ -34,10 +34,18 @@ export class FirebaseService {
 
   }
 
+
+  // ===== Actualizar Usuario =====
+
   updateUser(displayName: string){
 
     return updateProfile(getAuth().currentUser, { displayName});
 
+  }
+
+  // ===== Actualizar Usuario =====
+  sendRecoveryEmail(email: string){
+    return sendPasswordResetEmail(getAuth(), email)
   }
 
 
@@ -47,6 +55,17 @@ export class FirebaseService {
 
     return setDoc(doc(getFirestore(),path), data);
 
+
+  }
+
+
+  // =========== Obtener Documento ============
+
+  async getDocument(path: string){
+
+    return (await getDoc(doc(getFirestore(),path))).data();
+
+    
 
   }
 }
