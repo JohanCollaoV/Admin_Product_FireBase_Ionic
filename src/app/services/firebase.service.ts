@@ -6,6 +6,7 @@ import {AngularFirestore} from '@angular/fire/compat/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
+import { UtilsService } from './utils.service';
 
 
 @Injectable({
@@ -15,9 +16,21 @@ export class FirebaseService {
 
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
+  utilsSvc = inject(UtilsService);
   
 
   // =========== Autenticacion ============
+  getAuth(){
+    return getAuth();
+  }
+
+  // =========== Cerrar Sesion ============
+  signOut(){
+    getAuth().signOut();
+    localStorage.removeItem('user');
+    this.utilsSvc.routerLink('/auth');
+  }
+
 
 
   // ===== Acceder =====
