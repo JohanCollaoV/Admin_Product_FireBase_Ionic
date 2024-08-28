@@ -2,11 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import { User } from '../models/user.model';
-import {AngularFirestore} from '@angular/fire/compat/firestore';
-import { getFirestore } from 'firebase/firestore';
+import {AngularFirestore, } from '@angular/fire/compat/firestore';
+import { collection, getFirestore } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
-import { setDoc, doc, getDoc } from 'firebase/firestore';
+import { setDoc, doc, getDoc, addDoc} from 'firebase/firestore';
 import { UtilsService } from './utils.service';
+import {AngularFireStorage} from '@angular/fire/compat/storage';
+import { getStorage, uploadString, ref, getDownloadURL} from 'firebase/storage';
 
 
 @Injectable({
@@ -17,6 +19,7 @@ export class FirebaseService {
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
   utilsSvc = inject(UtilsService);
+  storage = inject(AngularFireStorage);
   
 
   // =========== Autenticacion ============
@@ -81,4 +84,21 @@ export class FirebaseService {
     
 
   }
+
+    // =========== Agregar Documento ============
+
+    async addDocument(path: string, data:any){
+
+      return addDoc(collection(getFirestore(),path), data);
+  
+  
+    }
+
+        // =========== Subir Imagen ============
+    uploadImage(path: string, data_url: string ){
+      return uploadString(ref(getStorage(), path), data_url, 'data_url').then(() =>{
+        return getDownloadURL(ref(getStorage(), path))
+      })
+
+    }
 }
