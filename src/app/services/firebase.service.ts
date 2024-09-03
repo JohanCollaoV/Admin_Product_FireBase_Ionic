@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, up
 import { User } from '../models/user.model';
 import {AngularFirestore, } from '@angular/fire/compat/firestore';
 import { collection, getFirestore } from 'firebase/firestore';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, collectionData, query } from '@angular/fire/firestore';
 import { setDoc, doc, getDoc, addDoc} from 'firebase/firestore';
 import { UtilsService } from './utils.service';
 import {AngularFireStorage} from '@angular/fire/compat/storage';
@@ -66,6 +66,14 @@ export class FirebaseService {
 
 
   // =========== Base de datos ============
+
+  getCollectionData(path: string, collectionQuery?: any){
+
+    const ref = collection(getFirestore(), path);
+    return collectionData(query(ref, collectionQuery), {idField: 'id'});
+    
+
+  }
 
   setDocument(path: string, data:any){
 
