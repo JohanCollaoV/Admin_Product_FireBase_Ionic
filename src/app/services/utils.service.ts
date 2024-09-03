@@ -1,6 +1,6 @@
 import { inject, Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
+import { AlertController, AlertOptions, LoadingController, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class UtilsService {
   toastCtrl = inject(ToastController);
   router = inject(Router);
   modalCtrl = inject(ModalController);
+  alertCtrl = inject(AlertController)
 
 
 
@@ -25,9 +26,14 @@ async takePicture (promptLabelHeader: string){
     promptLabelPicture: 'Toma una foto'
 
   });
+}
+
+async presentAlert(opts?: AlertOptions) {
+  const alert = await this.alertCtrl.create(opts);
+  await alert.present();
+}
 
 
-};
 
 
   // ========= Loading ==========
@@ -70,3 +76,7 @@ async takePicture (promptLabelHeader: string){
   }
 
 }
+function presentAlert(arg0: any) {
+  throw new Error('Function not implemented.');
+}
+

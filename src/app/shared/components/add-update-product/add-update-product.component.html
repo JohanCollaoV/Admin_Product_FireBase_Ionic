@@ -1,4 +1,4 @@
-<app-header [isModal]="true" title="Agregar Producto"></app-header>
+<app-header [isModal]="true" [title]=" product ? 'Actualizar Producto ' : 'Agregar Producto'"></app-header>
 <ion-content>
     <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
         <!--======= Si existe una imagen =======-->
@@ -28,7 +28,12 @@
         </div>
 
         <!--======= Precio =======-->
-        <app-custom-input [control]="form.controls.price" type="number" label="Precio"></app-custom-input>
+        <app-custom-input 
+        [control]="form.controls.price" 
+        type="number" 
+        label="Precio"
+        (ionInput)="setNumberInputs()"
+        ></app-custom-input>
 
         <div class="validators" *ngIf="form.controls.price.errors && form.controls.price.touched">
             <div *ngIf="form.controls.price.errors?.['required']">
@@ -40,7 +45,7 @@
         </div>
 
         <!--======= Sold =======-->
-        <app-custom-input [control]="form.controls.soldUnit" type="number" label="Unidades Vendidas"></app-custom-input>
+        <app-custom-input [control]="form.controls.soldUnit" type="number" label="Unidades Vendidas" (ionInput)="setNumberInputs()"></app-custom-input>
 
         <div class="validators" *ngIf="form.controls.soldUnit.errors && form.controls.soldUnit.touched">
             <div *ngIf="form.controls.soldUnit.errors?.['required']">
@@ -52,7 +57,7 @@
         </div>
 
         <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
-            Agregar Producto
+            {{product ? 'Actualizar Producto ' : 'Agregar Producto'}}
             <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
         </ion-button>
     </form>
