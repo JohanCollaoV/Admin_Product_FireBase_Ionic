@@ -38,7 +38,11 @@ export class HomePage implements OnInit {
     }, 1000);
   }
 
-  // ========= Obtener Productos =========
+  getProfits(){
+    return this.products.reduce((index,product)=> index + product.price * product.soldUnit,0)
+  }
+
+  // ========= Obtener Productos =========cd
   getProducts(){
 
     let path = `users/${this.user().uid}/products`
