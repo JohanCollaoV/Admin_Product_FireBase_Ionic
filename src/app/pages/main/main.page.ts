@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-main',
@@ -6,10 +9,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.page.scss'],
 })
 export class MainPage implements OnInit {
+  pages = [
+    { title: 'Iniciio', url: '/main/home', icon: 'home-outline' },
+    { title: 'Perfil', url: '.main/profile', icon: 'person-outline' },
+  ];
 
-  constructor() { }
+  router = inject(Router);
+  firebaseSvc = inject(FirebaseService);
+  utilsSvc = inject(UtilsService);
+
+  currentPath: string = '';
 
   ngOnInit() {
+    this.router.events.subscribe((event: any) => {
+      if (event?.url) this.currentPath = event.url;
+    });
   }
 
+  //====== Cerrar Sesion ========
+  signOut() {
+    this.firebaseSvc.signOut();
+  }
 }
