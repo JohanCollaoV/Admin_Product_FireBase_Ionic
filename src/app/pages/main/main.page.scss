@@ -26,8 +26,27 @@ ion-item {
     }
 }
 
+h4{
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+
 ion-menu{
     --width:254px;
     --min-whdit: 254px;
     outline: none;
+}
+
+ion-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.empty-icon{
+    font-size: 100px;
+
 }

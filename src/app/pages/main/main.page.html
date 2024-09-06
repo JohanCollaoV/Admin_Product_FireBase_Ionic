@@ -3,7 +3,15 @@
   <app-header title="Menu">
 
   </app-header>
-  <ion-content>
+  <ion-content class="ion-text-center">
+
+    <ion-avatar>
+      <img *ngIf="user()?.image" [src]="user()?.image" />
+      <ion-icon *ngIf="!user()?.image" class="empty-icon" name="person-circle-outline"></ion-icon>
+    </ion-avatar>
+  
+
+  <h4> {{user()?.name}} </h4>
     
 
       <ion-menu-toggle auto-hide="false" *ngFor="let p of pages">

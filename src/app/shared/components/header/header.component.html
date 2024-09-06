@@ -12,6 +12,13 @@
         <ion-icon name="close-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+
+
+
+      <ion-menu-button *ngIf="showMenu" menu="menu-content" slot="start"></ion-menu-button>
+
+
+
     <ion-title>
       <strong>{{ title }}</strong>
       <div class="admin">A D M I N</div>
